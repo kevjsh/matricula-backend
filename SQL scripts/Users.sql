@@ -33,7 +33,7 @@ CREATE TABLE Matricula_Users(
     personId VARCHAR2(20),
     name VARCHAR2(75),
     telephone NUMBER,
-    bithday DATE NULL,
+    birthday DATE NULL,
     careerId NUMBER NULL,
     roleId NUMBER(1),
     email VARCHAR2(100),
@@ -65,7 +65,7 @@ CREATE OR REPLACE PROCEDURE Matricula_InsertUser(
         personId VARCHAR2,
         name VARCHAR2,
         telephone NUMBER,
-        bithday DATE,
+        birthday DATE,
         careerId NUMBER,
         roleId NUMBER,
         email VARCHAR2,
@@ -74,7 +74,7 @@ CREATE OR REPLACE PROCEDURE Matricula_InsertUser(
 
 AS
 BEGIN
-	INSERT INTO Matricula_Users VALUES(sec_pk_user.nextval, personId, name, telephone, bithday, careerId, roleId, email, password);
+	INSERT INTO Matricula_Users VALUES(sec_pk_user.nextval, personId, name, telephone, birthday, careerId, roleId, email, password);
         COMMIT;
 END;
 /
@@ -86,7 +86,7 @@ CREATE OR REPLACE PROCEDURE Matricula_UpdateUser (
         personIdIn VARCHAR2,
         nameIn VARCHAR2,
         telephoneIn NUMBER,
-        bithdayIn DATE,
+        birthdayIn DATE,
         careerIdIn NUMBER,
         roleIdIn NUMBER,
         emailIn VARCHAR2,
@@ -94,9 +94,17 @@ CREATE OR REPLACE PROCEDURE Matricula_UpdateUser (
 )
 AS
 BEGIN
-        UPDATE Matricula_Users SET personId = personIdIn, name = nameIn, telephone = telephoneIn,
-        bithday = bithdayIn, careerId = careerIdIn, roleId = roleIdIn, email = emailIn, password = passwordIn
-        WHERE id = idIn;
+
+        IF careerIdIn = 0 OR roleIdIn = 1 OR roleIdIn = 2  OR roleIdIn = 3 THEN
+            UPDATE Matricula_Users SET personId = personIdIn, name = nameIn, telephone = telephoneIn,
+            birthday = birthdayIn, careerId = null, roleId = roleIdIn, email = emailIn, password = passwordIn
+            WHERE id = idIn;
+        ELSE
+            UPDATE Matricula_Users SET personId = personIdIn, name = nameIn, telephone = telephoneIn,
+            birthday = birthdayIn, careerId = careerIdIn, roleId = roleIdIn, email = emailIn, password = passwordIn
+            WHERE id = idIn;
+        END IF;
+        
         COMMIT;
 END;
 /
@@ -112,9 +120,9 @@ END;
 /
 
 /* Only for testing porpuses */
-EXECUTE Matricula_InsertUser('1', 'Administrador', 0, null, null, 1, 'email@email.com', '1');
-EXECUTE Matricula_InsertUser('2', 'Matriculador', 0, null, null, 2, 'email@email.com', '2');
-EXECUTE Matricula_InsertUser('3', 'Profesor', 0, null, null, 3, 'email@email.com', '3');
-EXECUTE Matricula_InsertUser('4', 'Estudiante', 0, to_date('2000-01-01','yyyy-mm-dd'), 1, 4, 'email@email.com', '4');
+EXECUTE Matricula_InsertUser('1', 'Administrador', 88888888, to_date('2000-01-01','yyyy-mm-dd'), null, 1, 'email@email.com', '1');
+EXECUTE Matricula_InsertUser('2', 'Matriculador', 77777777, to_date('2000-01-01','yyyy-mm-dd'), null, 2, 'email@email.com', '2');
+EXECUTE Matricula_InsertUser('3', 'Profesor', 66666666, to_date('2000-01-01','yyyy-mm-dd'), null, 3, 'email@email.com', '3');
+EXECUTE Matricula_InsertUser('4', 'Estudiante', 55555555, to_date('2000-01-01','yyyy-mm-dd'), 1, 4, 'email@email.com', '4');
 COMMIT;
 SELECT * FROM Matricula_Users;

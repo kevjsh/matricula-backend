@@ -2,25 +2,28 @@
 package Matricula.Logic;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class User {
     
+    transient SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
     private int id;
     private String personId;
     private String name;
     private int telephone;
-    private Date bithday;
+    private Date birthday;
     private int careerId;
     private int roleId;
     private String email ;
     private String password ;
 
-    public User(int id, String personId, String name, int telephone, Date bithday, int careerId, int roleId, String email, String password) {
+    public User(int id, String personId, String name, int telephone, Date birthday, int careerId, int roleId, String email, String password) {
         this.id = id;
         this.personId = personId;
         this.name = name;
         this.telephone = telephone;
-        this.bithday = bithday;
+        this.birthday = birthday;
         this.careerId = careerId;
         this.roleId = roleId;
         this.email = email;
@@ -64,11 +67,15 @@ public class User {
     }
 
     public Date getBithday() {
-        return bithday;
+        return birthday;
     }
 
-    public void setBithday(Date bithday) {
-        this.bithday = bithday;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+    
+    public void setBirthday(String birthday) {
+        this.birthday = Date.valueOf(birthday);
     }
 
     public int getCareerId() {
@@ -113,7 +120,7 @@ public class User {
         sb.append(", personId=").append(personId);
         sb.append(", name=").append(name);
         sb.append(", telephone=").append(telephone);
-        sb.append(", bithday=").append(bithday);
+        sb.append(", birthday=").append(birthday);
         sb.append(", careerId=").append(careerId);
         sb.append(", roleId=").append(roleId);
         sb.append(", email=").append(email);

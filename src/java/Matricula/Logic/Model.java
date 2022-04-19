@@ -24,9 +24,10 @@ public class Model {
     private final CoursesService courses;
 
     // Socket clients
+    private static Set<Session> userSockets;
     private static Set<Session> careerSockets;
     private static Set<Session> cicleSockets;
-    private static Set<Session> coursesSockets;
+    private static Set<Session> courseSockets;
 
     public static Model instance() throws GlobalException, NoDataException, IOException, EncodeException {
         if (uniqueInstance == null) {
@@ -44,15 +45,35 @@ public class Model {
         courses = new CoursesService();
 
         // Sockets
+        userSockets = Collections.synchronizedSet(new HashSet<Session>());
         careerSockets = Collections.synchronizedSet(new HashSet<Session>());
         cicleSockets = Collections.synchronizedSet(new HashSet<Session>());
-        coursesSockets = Collections.synchronizedSet(new HashSet<Session>());
+        courseSockets = Collections.synchronizedSet(new HashSet<Session>());
 
     }
 
     /* Users */
+    public Set<Session> getUserSockets() {
+        return userSockets;
+    }
+
+    public void notifyUserSockets(Session socket) throws IOException, EncodeException, GlobalException, NoDataException {
+
+        ArrayList<User> usersList = users.FindUser(null, null, 0, 1);
+
+        if (socket != null) {
+            socket.getBasicRemote().sendObject(new Gson().toJson(usersList));
+
+        } else {
+            // Notify all sockets
+            for (Session s : userSockets) {
+                s.getBasicRemote().sendObject(new Gson().toJson(usersList));
+            }
+        }
+    }
+
     public User login(User user) throws GlobalException, NoDataException {
-        User u = users.FindUser(user.getPersonId(),null,0,0).get(0);
+        User u = users.FindUser(user.getPersonId(), null, 0, 0).get(0);
 
         if (u != null && u.getPassword().equals(user.getPassword())) {
             return u;
@@ -60,86 +81,91 @@ public class Model {
 
         return null;
     }
+    
+    public void saveUser(User user) throws GlobalException, NoDataException {
+        users.saveUser(user);
+    }
+
+    public void deleteUser(int id) throws GlobalException, NoDataException {
+        users.DeleteUser(id);
+    }
 
     /* ************************************************************************** */
-    
-    /* Careers */
+ /* Careers */
     public Set<Session> getCareerSockets() {
         return careerSockets;
     }
 
     public void notifyCareerSockets(Session socket) throws IOException, EncodeException, GlobalException, NoDataException {
 
-        ArrayList<Career> careersList = careers.FindCareer(null,null,1);
-        
+        ArrayList<Career> careersList = careers.FindCareer(null, null, 1);
+
         if (socket != null) {
             socket.getBasicRemote().sendObject(new Gson().toJson(careersList));
-            
-        }else{
+
+        } else {
             // Notify all sockets
             for (Session s : careerSockets) {
                 s.getBasicRemote().sendObject(new Gson().toJson(careersList));
             }
         }
     }
-    
+
     /* ************************************************************************** */
-    
-    /* Cicles */
+ /* Cicles */
     public Set<Session> getCicleSockets() {
         return cicleSockets;
     }
 
     public void notifyCicleSockets(Session socket) throws IOException, EncodeException, GlobalException, NoDataException {
 
-        ArrayList<Cicle> ciclesList = cicles.FindCicle(0,1);
-        
+        ArrayList<Cicle> ciclesList = cicles.FindCicle(0, 1);
+
         if (socket != null) {
             socket.getBasicRemote().sendObject(new Gson().toJson(ciclesList));
-            
-        }else{
+
+        } else {
             // Notify all sockets
             for (Session s : cicleSockets) {
                 s.getBasicRemote().sendObject(new Gson().toJson(ciclesList));
             }
-            
+
         }
     }
-    
+
     /* ************************************************************************** */
 
-    /* Courses */
-    
-     public Set<Session> getCoursesSockets() {
-        return coursesSockets;
+ /* Courses */
+    public Set<Session> getCoursesSockets() {
+        return courseSockets;
     }
 
     public void notifyCoursesSockets(Session socket) throws IOException, EncodeException, GlobalException, NoDataException {
 
         ArrayList<Course> coursesList = courses.FindCourse(0, "", "", 0, 1);
-        
+
         if (socket != null) {
             socket.getBasicRemote().sendObject(new Gson().toJson(coursesList));
-            
-        }else{
+
+        } else {
             // Notify all sockets
-            for (Session s : coursesSockets) {
+            for (Session s : courseSockets) {
                 s.getBasicRemote().sendObject(new Gson().toJson(coursesList));
             }
-            
-        } 
+
+        }
     }
-    
-    public void addCourse(Course course) throws GlobalException, NoDataException{
+
+    public void addCourse(Course course) throws GlobalException, NoDataException {
         courses.AddCourse(course);
     }
-    
-    public void updateCourse(Course course) throws GlobalException, NoDataException{
+
+    public void updateCourse(Course course) throws GlobalException, NoDataException {
         courses.UpdateCourse(course);
     }
-    
-    public void deleteCourse(int id) throws GlobalException, NoDataException{
+
+    public void deleteCourse(int id) throws GlobalException, NoDataException {
         courses.DeleteCourse(id);
     }
-    
+
 }
