@@ -74,7 +74,13 @@ CREATE OR REPLACE PROCEDURE Matricula_InsertUser(
 
 AS
 BEGIN
-	INSERT INTO Matricula_Users VALUES(sec_pk_user.nextval, personId, name, telephone, birthday, careerId, roleId, email, password);
+
+        IF careerId = 0 OR roleId = 1 OR roleId = 2  OR roleId = 3 THEN
+            INSERT INTO Matricula_Users VALUES(sec_pk_user.nextval, personId, name, telephone, birthday, null, roleId, email, password);
+        ELSE
+            INSERT INTO Matricula_Users VALUES(sec_pk_user.nextval, personId, name, telephone, birthday, careerId, roleId, email, password);
+        END IF;
+	
         COMMIT;
 END;
 /
