@@ -64,7 +64,7 @@ END;
 
 /* *************************************************************** */
 
-CREATE OR REPLACE PROCEDURE Matricula_DeleteCicle(idIn IN NUMBER)
+CREATE OR REPLACE PROCEDURE Matricula_DeleteCareer(idIn IN NUMBER)
 AS
 BEGIN
     DELETE FROM Matricula_Careers WHERE id = idIn;
@@ -73,7 +73,7 @@ END;
 /
 
 /* Only for testing porpuses */
-EXECUTE Matricula_InsertCareer('INFO2022','Ingeniería en Sistema de Información', 'Bachillerato Universitario');
-EXECUTE Matricula_InsertCareer('HISTO2022','Enseñanza de la Historia', 'Bachillerato Universitario');
+EXECUTE Matricula_InsertCareer('INFO2022','Ingenierï¿½a en Sistema de Informaciï¿½n', 'Bachillerato Universitario');
+EXECUTE Matricula_InsertCareer('HISTO2022','Enseï¿½anza de la Historia', 'Bachillerato Universitario');
 COMMIT;
 SELECT * FROM Matricula_Careers;

@@ -110,6 +110,14 @@ public class Model {
             }
         }
     }
+    
+    public void saveCareer(Career career) throws GlobalException, NoDataException{
+        careers.saveCareer(career);
+    }
+    
+    public void deleteCareer(int id) throws GlobalException, NoDataException{
+        careers.DeleteCareer(id);
+    }
 
     /* ************************************************************************** */
  /* Cicles */
@@ -131,6 +139,14 @@ public class Model {
             }
 
         }
+    }
+    
+    public void saveCicle(Cicle cicle) throws GlobalException, NoDataException{
+        cicles.saveCicle(cicle);
+    }
+    
+    public void deleteCicle(int id) throws GlobalException, NoDataException{
+        cicles.DeleteCicle(id);
     }
 
     /* ************************************************************************** */
