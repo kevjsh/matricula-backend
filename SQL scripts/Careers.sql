@@ -57,7 +57,7 @@ CREATE OR REPLACE PROCEDURE Matricula_UpdateCareer (
 )
 AS
 BEGIN
-        UPDATE Matricula_Careers SET code = codeIn, nameIn = name, title = titleIn WHERE id = idIn;
+        UPDATE Matricula_Careers SET code = codeIn, name = nameIn, title = titleIn WHERE id = idIn;
         COMMIT;
 END;
 /
@@ -73,7 +73,7 @@ END;
 /
 
 /* Only for testing porpuses */
-EXECUTE Matricula_InsertCareer('INFO2022','Ingenierï¿½a en Sistema de Informaciï¿½n', 'Bachillerato Universitario');
-EXECUTE Matricula_InsertCareer('HISTO2022','Enseï¿½anza de la Historia', 'Bachillerato Universitario');
+EXECUTE Matricula_InsertCareer('INFO2022','Ingeniería en Sistema de Información', 'Bachillerato Universitario');
+EXECUTE Matricula_InsertCareer('HISTO2022','Enseñanza de la Historia', 'Bachillerato Universitario');
 COMMIT;
 SELECT * FROM Matricula_Careers;

@@ -1,13 +1,9 @@
-
 package Matricula.Logic;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class User {
-    
-    transient SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+
     private int id;
     private String personId;
     private String name;
@@ -15,8 +11,8 @@ public class User {
     private Date birthday;
     private int careerId;
     private int roleId;
-    private String email ;
-    private String password ;
+    private String email;
+    private String password;
 
     public User(int id, String personId, String name, int telephone, Date birthday, int careerId, int roleId, String email, String password) {
         this.id = id;
@@ -29,9 +25,9 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    
+
     public User() {
-        this(0,"","",0, null, 0,0,"","");
+        this(0, "", "", 0, null, 0, 0, "", "");
     }
 
     public int getId() {
@@ -70,12 +66,12 @@ public class User {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-    
     public void setBirthday(String birthday) {
         this.birthday = Date.valueOf(birthday);
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public int getCareerId() {
@@ -109,9 +105,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
 
     @Override
     public String toString() {
@@ -128,5 +121,5 @@ public class User {
         sb.append('}');
         return sb.toString();
     }
-    
+
 }

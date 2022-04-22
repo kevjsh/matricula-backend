@@ -22,12 +22,14 @@ public class Model {
     private final CareersService careers;
     private final CiclesService cicles;
     private final CoursesService courses;
+    private final GroupsService groups;
 
     // Socket clients
     private static Set<Session> userSockets;
     private static Set<Session> careerSockets;
     private static Set<Session> cicleSockets;
     private static Set<Session> courseSockets;
+    private static Set<Session> groupSockets;
 
     public static Model instance() throws GlobalException, NoDataException, IOException, EncodeException {
         if (uniqueInstance == null) {
@@ -43,12 +45,14 @@ public class Model {
         careers = new CareersService();
         cicles = new CiclesService();
         courses = new CoursesService();
+        groups = new GroupsService();
 
         // Sockets
         userSockets = Collections.synchronizedSet(new HashSet<Session>());
         careerSockets = Collections.synchronizedSet(new HashSet<Session>());
         cicleSockets = Collections.synchronizedSet(new HashSet<Session>());
         courseSockets = Collections.synchronizedSet(new HashSet<Session>());
+        groupSockets = Collections.synchronizedSet(new HashSet<Session>());
 
     }
 
@@ -81,7 +85,7 @@ public class Model {
 
         return null;
     }
-    
+
     public void saveUser(User user) throws GlobalException, NoDataException {
         users.saveUser(user);
     }
@@ -110,17 +114,18 @@ public class Model {
             }
         }
     }
-    
-    public void saveCareer(Career career) throws GlobalException, NoDataException{
+
+    public void saveCareer(Career career) throws GlobalException, NoDataException {
         careers.saveCareer(career);
     }
-    
-    public void deleteCareer(int id) throws GlobalException, NoDataException{
+
+    public void deleteCareer(int id) throws GlobalException, NoDataException {
         careers.DeleteCareer(id);
     }
 
     /* ************************************************************************** */
- /* Cicles */
+
+    /* Cicles */
     public Set<Session> getCicleSockets() {
         return cicleSockets;
     }
@@ -140,18 +145,18 @@ public class Model {
 
         }
     }
-    
-    public void saveCicle(Cicle cicle) throws GlobalException, NoDataException{
+
+    public void saveCicle(Cicle cicle) throws GlobalException, NoDataException {
         cicles.saveCicle(cicle);
     }
-    
-    public void deleteCicle(int id) throws GlobalException, NoDataException{
+
+    public void deleteCicle(int id) throws GlobalException, NoDataException {
         cicles.DeleteCicle(id);
     }
 
     /* ************************************************************************** */
 
- /* Courses */
+    /* Courses */
     public Set<Session> getCoursesSockets() {
         return courseSockets;
     }
@@ -182,6 +187,36 @@ public class Model {
 
     public void deleteCourse(int id) throws GlobalException, NoDataException {
         courses.DeleteCourse(id);
+    }
+    
+    /* ************************************************************************** */
+
+    /* Groups */
+    public Set<Session> getGroupSockets() {
+        return groupSockets;
+    }
+
+    public void notifyGroupSockets(Session socket) throws IOException, EncodeException, GlobalException, NoDataException {
+
+        ArrayList<Group> groupsList = groups.FindGroup(0,1);
+
+        if (socket != null) {
+            socket.getBasicRemote().sendObject(new Gson().toJson(groupsList));
+
+        } else {
+            // Notify all sockets
+            for (Session s : groupSockets) {
+                s.getBasicRemote().sendObject(new Gson().toJson(groupsList));
+            }
+        }
+    }
+    
+    public void saveGroup(Group group) throws GlobalException, NoDataException {
+        groups.SaveGroup(group);
+    }
+
+    public void deleteGroup(int id) throws GlobalException, NoDataException {
+        groups.DeleteGroup(id);
     }
 
 }

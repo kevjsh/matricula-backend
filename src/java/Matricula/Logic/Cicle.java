@@ -1,12 +1,9 @@
-
 package Matricula.Logic;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class Cicle {
-    transient SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+
     private int id;
     private int year;
     private int cicleNumber;
@@ -52,26 +49,26 @@ public class Cicle {
         return initDate;
     }
 
+    public void setInitDate(String initDate) {
+        this.initDate = Date.valueOf(initDate);
+    }
+
     public void setInitDate(Date initDate) {
         this.initDate = initDate;
     }
-    
-    public void setInitDate(String initDate) {
-        this.initDate = Date.valueOf(initDate);
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
     }
 
     public Date getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
-    }
-    
     public void setFinishDate(String finishDate) {
         this.finishDate = Date.valueOf(finishDate);
     }
-    
+
     @Override
     public String toString() {
         return "Cicle{" + "id=" + id + ", year=" + year + ", cicleNumber=" + cicleNumber + ", initDate=" + initDate + ", finishDate=" + finishDate + '}';

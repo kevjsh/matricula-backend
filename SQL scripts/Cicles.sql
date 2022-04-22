@@ -77,4 +77,5 @@ END;
 
 /* Only for testing porpuses */
 INSERT INTO Matricula_Cicles VALUES(sec_pk_cicle.nextval, 2022, 1, to_date('2022-01-01','yyyy,mm,dd'), to_date('2022-01-01','yyyy,mm,dd'));
+INSERT INTO Matricula_Cicles VALUES(sec_pk_cicle.nextval, 2022, 2, to_date('2022-01-01','yyyy,mm,dd'), to_date('2022-01-01','yyyy,mm,dd'));
 COMMIT;
