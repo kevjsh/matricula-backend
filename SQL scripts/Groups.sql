@@ -94,6 +94,6 @@ END;
 
 /* Only for testing porpuses */
 EXECUTE Matricula_InsertGroup(1, 1, '8am a 9:40am' , 1, 3);
-EXECUTE Matricula_InsertGroup(1, 0, '10am a 11:40am', 2 , 3);
+EXECUTE Matricula_InsertGroup(3, 0, '10am a 11:40am', 2 , 3);
 COMMIT;
 SELECT * FROM Matricula_Groups;

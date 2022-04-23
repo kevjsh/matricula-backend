@@ -12,7 +12,7 @@ import oracle.jdbc.internal.OracleTypes;
 public class UsersService extends Service {
 
     private static final String ADDDUSER = "{call Matricula_InsertUser(?,?,?,?,?,?,?,?)}";
-    private static final String FINDUSER = "{? = call Matricula_FindUser(?,?,?, ?)}";
+    private static final String FINDUSER = "{? = call Matricula_FindUser(?,?,?)}";
     private static final String UPDATEDUSER = "{call Matricula_UpdateUser(?,?,?,?,?,?,?,?,?)}";
     private static final String DELETEDUSER = "{call Matricula_DeleteUser(?)}";
 
@@ -82,7 +82,7 @@ public class UsersService extends Service {
 
     }
 
-    public ArrayList<User> FindUser(String personId, String name, int careerId, int status) throws GlobalException, NoDataException {
+    public ArrayList<User> FindUser(int id, String personId, int status) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -100,12 +100,11 @@ public class UsersService extends Service {
         try {
             pstmt = conexion.prepareCall(FINDUSER);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setString(2, personId);
-            pstmt.setString(3, name);
-            pstmt.setInt(4, careerId);
-
+            pstmt.setInt(2, id);
+            pstmt.setString(3, personId);
+            
             // Status = 0 specific search, status = 1 all records
-            pstmt.setInt(5, status);
+            pstmt.setInt(4, status);
 
             pstmt.execute();
 

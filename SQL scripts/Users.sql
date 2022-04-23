@@ -48,13 +48,13 @@ CREATE TABLE Matricula_Users(
 
 /* *************************************************************** */
 
-CREATE OR REPLACE FUNCTION Matricula_FindUser(personIdIn IN VARCHAR2, nameIn VARCHAR2, careerIdIn NUMBER, status NUMBER)
+CREATE OR REPLACE FUNCTION Matricula_FindUser(idIn NUMBER, personIdIn VARCHAR2, status NUMBER)
 RETURN Types.ref_cursor 
 AS 
         user_cursor types.ref_cursor; 
 BEGIN 
   OPEN user_cursor FOR 
-       SELECT * FROM Matricula_Users WHERE personId = personIdIn OR name like nameIn OR careerId = careerIdIn OR status = 1;
+       SELECT * FROM Matricula_Users WHERE id = idIn OR personId = personIdIn OR status = 1;
 RETURN user_cursor; 
 END;
 /
