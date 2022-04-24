@@ -41,7 +41,7 @@ CREATE TABLE Matricula_Users(
 
     CONSTRAINT pk_user PRIMARY KEY (id),
     CONSTRAINT ck_personId UNIQUE(personId),
-    CONSTRAINT fk_user_career FOREIGN KEY (careerId) REFERENCES Matricula_Careers(id),
+    CONSTRAINT fk_user_career FOREIGN KEY (careerId) REFERENCES Matricula_Careers(id) ON DELETE CASCADE,
     CONSTRAINT fk_user_rol FOREIGN KEY (roleId) REFERENCES Matricula_Roles(id)
 );
 

@@ -19,8 +19,8 @@ CREATE TABLE Matricula_Enrollments(
         CONSTRAINT pk_enrollment PRIMARY KEY (id),
         CONSTRAINT ck_enrollment UNIQUE(groupId, userId),
         
-        CONSTRAINT fk_enrollment_group FOREIGN KEY (groupId) REFERENCES Matricula_Groups(id),
-        CONSTRAINT fk_enrollment_user FOREIGN KEY (userId) REFERENCES Matricula_Users(id)
+        CONSTRAINT fk_enrollment_group FOREIGN KEY (groupId) REFERENCES Matricula_Groups(id) ON DELETE CASCADE,
+        CONSTRAINT fk_enrollment_user FOREIGN KEY (userId) REFERENCES Matricula_Users(id) ON DELETE CASCADE
 );
 
 /* *************************************************************** */

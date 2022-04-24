@@ -18,7 +18,7 @@ CREATE TABLE Matricula_Courses(
         hours NUMBER,
         careerId NUMBER,
         CONSTRAINT pk_course PRIMARY KEY (id),
-        CONSTRAINT fk_course_career FOREIGN KEY (careerId) REFERENCES Matricula_Careers(id)
+        CONSTRAINT fk_course_career FOREIGN KEY (careerId) REFERENCES Matricula_Careers(id) ON DELETE CASCADE
 );
 
 /* *************************************************************** */
@@ -81,5 +81,6 @@ END;
 /* Only for testing porpuses */
 EXECUTE Matricula_InsertCourse('EIF-401', 'Sistemas I', 4, 16, 1);
 EXECUTE Matricula_InsertCourse('HIS-190', 'Introducción a la Historia', 4, 12, 2);
+EXECUTE Matricula_InsertCourse('EIF-204', 'Arquitectura', 4, 12, 2);
 COMMIT;
 SELECT * FROM Matricula_Courses;

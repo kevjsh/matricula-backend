@@ -15,15 +15,15 @@ CREATE TABLE Matricula_Groups(
         courseId NUMBER,
         groupNumber NUMBER(1),
         schedule VARCHAR2(20),
-        cicleId NUMBER,
+        cicleId NUMBER NULL,
         professorId NUMBER,
         
         CONSTRAINT pk_group PRIMARY KEY (id),
         CONSTRAINT ck_group UNIQUE(courseId, groupNumber, cicleId),
         
-        CONSTRAINT fk_group_cicle FOREIGN KEY (cicleId) REFERENCES Matricula_Cicles(id),
-        CONSTRAINT fk_group_course FOREIGN KEY (courseId) REFERENCES Matricula_Courses(id),
-        CONSTRAINT fk_group_user FOREIGN KEY (professorId) REFERENCES Matricula_Users(id)
+        CONSTRAINT fk_group_cicle FOREIGN KEY (cicleId) REFERENCES Matricula_Cicles(id) ON DELETE CASCADE,
+        CONSTRAINT fk_group_course FOREIGN KEY (courseId) REFERENCES Matricula_Courses(id) ON DELETE CASCADE,
+        CONSTRAINT fk_group_user FOREIGN KEY (professorId) REFERENCES Matricula_Users(id) ON DELETE CASCADE
 );
 
 /* *************************************************************** */
